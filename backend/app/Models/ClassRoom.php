@@ -21,7 +21,6 @@ class ClassRoom extends Model
     protected $table = 'classes';
 
     protected $fillable = [
-        'school_id',
         'name',
         'slug',
         'description',
@@ -45,13 +44,6 @@ class ClassRoom extends Model
         });
     }
 
-    /**
-     * The school this class belongs to.
-     */
-    public function school(): BelongsTo
-    {
-        return $this->belongsTo(School::class);
-    }
 
     /**
      * The user who created this class.
@@ -67,8 +59,7 @@ class ClassRoom extends Model
     public function members(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'class_members', 'class_id', 'user_id')
-            ->withPivot('role', 'joined_at')
-            ->withTimestamps();
+            ->withPivot('role', 'joined_at');
     }
 
     /**

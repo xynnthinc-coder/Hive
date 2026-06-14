@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('class_id')->constrained('classes')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->enum('role', ['member', 'moderator', 'teacher'])->default('member');
+            $table->enum('role', ['member', 'teacher'])->default('member');
             $table->timestamp('joined_at')->useCurrent();
 
             // A user can only be in a class once

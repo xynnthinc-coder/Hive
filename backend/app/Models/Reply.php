@@ -68,4 +68,13 @@ class Reply extends Model
     {
         return $this->morphMany(Vote::class, 'voteable');
     }
+
+    /**
+     * The current user's vote.
+     */
+    public function userVote()
+    {
+        return $this->morphOne(Vote::class, 'voteable')
+            ->where('user_id', auth()->id());
+    }
 }

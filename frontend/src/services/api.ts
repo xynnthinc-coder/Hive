@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api',
+  timeout: 30000, // 30s — php artisan serve is single-threaded, requests queue up
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
@@ -22,6 +23,7 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    // Only redirect on genuine 401 auth failures, not on timeouts/network errors
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
@@ -32,3 +34,4 @@ api.interceptors.response.use(
 );
 
 export default api;
+

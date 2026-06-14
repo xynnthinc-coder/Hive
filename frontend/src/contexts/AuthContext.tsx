@@ -1,13 +1,17 @@
+"use client";
+
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import authService, { type User, type LoginData, type RegisterData } from '../services/auth';
 
 interface AuthContextType {
   user: User | null;
+  setUser: (user: User) => void;
   isLoading: boolean;
   isAuthenticated: boolean;
   login: (data: LoginData) => Promise<void>;
   register: (data: RegisterData) => Promise<void>;
   logout: () => Promise<void>;
+  refreshUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -21,7 +25,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (token) {
       authService
         .getUser()
-        .then((user) => setUser(user))
+        .then((userData) => setUser(userData))
         .catch(() => {
           localStorage.removeItem('token');
           localStorage.removeItem('user');
@@ -56,15 +60,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const refreshUser = async () => {
+    try {
+      const userData = await authService.getUser();
+      setUser(userData);
+      localStorage.setItem('user', JSON.stringify(userData));
+    } catch {
+      // silent fail
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
         user,
+        setUser: (u: User) => {
+          setUser(u);
+          localStorage.setItem('user', JSON.stringify(u));
+        },
         isLoading,
         isAuthenticated: !!user,
         login,
         register,
         logout,
+        refreshUser,
       }}
     >
       {children}

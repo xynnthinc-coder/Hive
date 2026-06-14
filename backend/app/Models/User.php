@@ -30,7 +30,6 @@ class User extends Authenticatable
         'role',
         'avatar',
         'bio',
-        'school_id',
     ];
 
     /**
@@ -56,15 +55,6 @@ class User extends Authenticatable
         ];
     }
 
-    // ─── Relationships ───────────────────────────────────
-
-    /**
-     * The school this user belongs to.
-     */
-    public function school(): BelongsTo
-    {
-        return $this->belongsTo(School::class);
-    }
 
     /**
      * Classes this user is a member of (through pivot).
@@ -72,8 +62,7 @@ class User extends Authenticatable
     public function classes(): BelongsToMany
     {
         return $this->belongsToMany(ClassRoom::class, 'class_members', 'user_id', 'class_id')
-            ->withPivot('role', 'joined_at')
-            ->withTimestamps();
+            ->withPivot('role', 'joined_at');
     }
 
     /**
@@ -132,17 +121,6 @@ class User extends Authenticatable
     public function isMemberOf(ClassRoom $class): bool
     {
         return $this->classMembers()->where('class_id', $class->id)->exists();
-    }
-
-    /**
-     * Check if user is a moderator in a specific class.
-     */
-    public function isModeratorOf(ClassRoom $class): bool
-    {
-        return $this->classMembers()
-            ->where('class_id', $class->id)
-            ->where('role', 'moderator')
-            ->exists();
     }
 
     /**
