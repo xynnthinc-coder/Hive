@@ -40,7 +40,7 @@ export default function HiveToast() {
           className={[
             'px-5 py-2.5 rounded-2xl text-sm font-medium',
             'shadow-lg border animate-slide-up',
-            'backdrop-blur-md max-w-[90vw] break-words text-center',
+            'backdrop-blur-md max-w-[120vw] break-words text-center',
             t.type === 'success'
               ? 'bg-secondary/15 text-secondary border-secondary/20'
               : 'bg-error/15 text-error border-error/20',
