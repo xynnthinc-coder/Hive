@@ -155,18 +155,20 @@ function ReplyItem({
   reply,
   classId,
   threadId,
-  depth,
+  depth = 0,
   userId,
   myRole,
   onRefresh,
+  parentAuthorName,
 }: {
   reply: Reply;
   classId: number;
   threadId: number;
-  depth: number;
-  userId: number | undefined;
-  myRole: string;
+  depth?: number;
+  userId?: number;
+  myRole?: string;
   onRefresh: () => void;
+  parentAuthorName?: string;
 }) {
   const [replyText, setReplyText] = useState("");
   const [showReplyForm, setShowReplyForm] = useState(false);
@@ -250,12 +252,23 @@ function ReplyItem({
 
   return (
     <div
-      className={`${depth > 0 ? "ml-3 md:ml-8 pl-3 md:pl-4 border-l-2 border-honey/15" : ""}`}
+      className={`${
+        depth === 1 ? "ml-3 md:ml-8 pl-3 md:pl-4 border-l-2 border-outline-variant/15" :
+        depth > 1 ? "mt-2" : ""
+      }`}
     >
       <HiveCard
         padding="md"
         className={`${reply.is_best_answer ? "border-honey/25" : ""}`}
       >
+        {/* Replying to indicator for flat nested replies */}
+        {depth > 1 && parentAuthorName && (
+          <div className="text-[0.65rem] text-on-surface-variant/80 mb-2 font-medium flex items-center gap-1.5">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 10 20 15 15 20"/><path d="M4 4v7a4 4 0 004 4h12"/></svg>
+            Membalas <span className="text-honey font-bold">@{parentAuthorName}</span>
+          </div>
+        )}
+
         {reply.is_best_answer && (
           <div className="inline-flex items-center gap-1 text-[0.65rem] font-bold text-honey bg-honey/10 py-1 px-3 rounded-full mb-2.5">
             <IconStar /> Best Answer
@@ -390,6 +403,7 @@ function ReplyItem({
               userId={userId}
               myRole={myRole}
               onRefresh={onRefresh}
+              parentAuthorName={reply.user?.nickname || reply.user?.name}
             />
           ))}
         </div>

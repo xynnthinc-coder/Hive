@@ -473,7 +473,7 @@ export default function LoungePage({ params }: { params: Promise<{ id: string }>
 
   return (
     <AppLayout title={`Lounge`} activeNav="class">
-      <div className="flex flex-col h-[calc(100dvh-64px-68px-1rem)] md:h-[calc(100dvh-64px-4rem)] max-w-[1200px] mx-auto w-full overflow-hidden">
+      <div className="flex flex-col h-[calc(100dvh-176px)] md:h-[calc(100dvh-112px)] lg:h-[calc(100dvh-128px)] max-w-[1200px] mx-auto w-full overflow-hidden">
         {/* ── Channel Bar ── */}
         <div className="flex items-center gap-2 md:gap-3 mb-3 shrink-0 overflow-hidden">
           {/* Channel chips */}
