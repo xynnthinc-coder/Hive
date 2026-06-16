@@ -472,10 +472,10 @@ export default function LoungePage({ params }: { params: Promise<{ id: string }>
   }
 
   return (
-    <AppLayout title={`Lounge — ${classData.name}`} activeNav="class">
-      <div className="flex flex-col h-[calc(100vh-64px-68px-1rem)] md:h-[calc(100vh-64px-4rem)] max-w-[1200px] mx-auto">
+    <AppLayout title={`Lounge`} activeNav="class">
+      <div className="flex flex-col h-[calc(100vh-64px-68px-1rem)] md:h-[calc(100vh-64px-4rem)] max-w-[1200px] mx-auto w-full overflow-hidden">
         {/* ── Channel Bar ── */}
-        <div className="flex items-center gap-3 mb-3 shrink-0">
+        <div className="flex items-center gap-2 md:gap-3 mb-3 shrink-0 overflow-hidden">
           {/* Channel chips */}
           <div className="flex gap-2 overflow-x-auto scrollbar-none flex-1 py-1">
             {channels.map(ch => (
@@ -525,7 +525,7 @@ export default function LoungePage({ params }: { params: Promise<{ id: string }>
 
           {/* Channel info header */}
           {activeChannel && (
-            <div className="relative px-5 py-3 border-b border-outline-variant/10 flex items-center gap-2.5 shrink-0">
+            <div className="relative px-3 md:px-5 py-3 border-b border-outline-variant/10 flex items-center gap-2.5 shrink-0">
               <div className="w-8 h-8 rounded-lg bg-honey/10 flex items-center justify-center text-honey">
                 <IconHash />
               </div>

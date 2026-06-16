@@ -546,7 +546,7 @@ export default function ThreadDetail({
   return (
     <AppLayout title={thread.forum_channel?.name || "Thread"} activeNav="class">
       <HiveToast />
-      <div className="max-w-[1200px] mx-auto w-full pb-32">
+      <div className="max-w-[1200px] mx-auto w-full pb-40 md:pb-32">
         {/* ── Thread Content ── */}
         <HiveCard padding="lg" className="mb-4 relative overflow-hidden">
           {/* Subtle top glow */}
@@ -570,7 +570,7 @@ export default function ThreadDetail({
                 </span>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               {thread.is_pinned && (
                 <HiveBadge variant="honey" icon={<IconPin />}>
                   Pinned
