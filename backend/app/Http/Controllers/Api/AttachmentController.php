@@ -39,7 +39,7 @@ class AttachmentController extends Controller
         $file->move($destPath, $filename);
 
         return response()->json([
-            'url' => $request->getSchemeAndHttpHost() . '/uploads/attachments/' . $filename,
+            'url' => $request->getSchemeAndHttpHost() . '/api/attachments/' . $filename,
             'name' => $originalName,
             'size' => $size,
             'type' => $type,
