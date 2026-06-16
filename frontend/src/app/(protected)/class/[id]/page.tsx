@@ -214,7 +214,7 @@ export default function ClassDetail({ params }: { params: Promise<{ id: string }
           <h2 className="text-xl md:text-2xl font-bold tracking-tight mb-1">{classData.name}</h2>
           {classData.description && <p className="text-sm text-on-surface-variant">{classData.description}</p>}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <button
             className="flex items-center gap-2 hive-card py-2 px-4 cursor-pointer text-on-surface-variant relative hover:border-honey/30 hover:text-honey"
             onClick={copyInviteCode}

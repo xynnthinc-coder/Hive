@@ -250,7 +250,7 @@ function ReplyItem({
 
   return (
     <div
-      className={`${depth > 0 ? "ml-4 md:ml-8 pl-4 border-l-2 border-honey/15" : ""}`}
+      className={`${depth > 0 ? "ml-3 md:ml-8 pl-3 md:pl-4 border-l-2 border-honey/15" : ""}`}
     >
       <HiveCard
         padding="md"
@@ -651,7 +651,7 @@ export default function ThreadDetail({
           onSend={handleSubmitReply}
           sending={submitting}
           placeholder="Tulis balasan..."
-          className="fixed bottom-0 left-0 right-0 z-40 bg-[#0a1224]/80 backdrop-blur-xl shadow-[0_-20px_40px_-10px_rgba(0,0,0,0.3)] animate-fade-up pb-6 md:pb-4 rounded-2xl"
+          className="fixed bottom-[68px] md:bottom-0 left-0 right-0 md:left-[260px] z-40 bg-[#0a1224]/80 backdrop-blur-xl shadow-[0_-20px_40px_-10px_rgba(0,0,0,0.3)] animate-fade-up pb-2 md:pb-4 rounded-t-2xl"
         />
 
         {/* ── Replies ── */}

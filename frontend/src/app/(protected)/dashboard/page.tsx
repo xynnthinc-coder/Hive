@@ -315,7 +315,7 @@ export default function Dashboard() {
       <HiveToast />
 
       {/* ── Greeting ── */}
-      <div className="flex flex-col md:flex-row items-start justify-between gap-4 mb-8">
+      <div className="flex flex-col sm:flex-row items-start justify-between gap-4 mb-8">
         <div>
           <h2 className="text-2xl md:text-[1.75rem] font-bold tracking-tight mb-1">
             {greeting()}, <span className="text-gradient-brand">{user?.name?.split(' ')[0]}</span> ✦
@@ -326,7 +326,7 @@ export default function Dashboard() {
               : 'Belum ada kelas. Yuk gabung atau buat kelas baru!'}
           </p>
         </div>
-        <div className="flex gap-2 shrink-0">
+        <div className="flex gap-2 shrink-0 w-full sm:w-auto">
           <HiveButton variant="secondary" size="md" icon={<IcoKey />} onClick={() => setShowJoin(true)}>
             Gabung
           </HiveButton>

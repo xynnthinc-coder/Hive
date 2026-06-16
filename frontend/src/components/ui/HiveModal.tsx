@@ -42,9 +42,10 @@ export default function HiveModal({
         className={[
           'relative w-full',
           maxWidth,
-          'hive-card p-6 md:p-8',
+          'hive-card p-5 md:p-8',
           'shadow-2xl shadow-black/30',
           'animate-scale-in',
+          'max-h-[90vh] overflow-y-auto',
         ].join(' ')}
         onClick={(e) => e.stopPropagation()}
       >

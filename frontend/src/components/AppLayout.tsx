@@ -602,7 +602,7 @@ export default function AppLayout({ children, title = 'Dashboard', activeNav }: 
       {/* ═══════════════════════════════════════════════════════════════
           Mobile Bottom Navigation — Home, Lounge, Profile
          ═══════════════════════════════════════════════════════════════ */}
-      <nav className="flex md:hidden fixed bottom-0 left-0 right-0 h-[68px] glass-bg border-t border-outline-variant/10 z-50 items-center justify-around px-6">
+      <nav className="flex md:hidden fixed bottom-0 left-0 right-0 h-[68px] glass-bg border-t border-outline-variant/10 z-50 items-center justify-around px-4 safe-area-bottom">
         {/* Home */}
         <button
           className={[

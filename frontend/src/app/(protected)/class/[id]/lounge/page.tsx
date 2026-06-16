@@ -122,7 +122,7 @@ function MessageBubble({
       </div>
 
       {/* Bubble */}
-      <div className={`max-w-[70%] min-w-[80px] relative ${isOwn ? 'items-end' : 'items-start'}`}>
+      <div className={`max-w-[85%] md:max-w-[70%] min-w-[80px] relative ${isOwn ? 'items-end' : 'items-start'}`}>
         {/* Author name (only for others, and only when showing avatar) */}
         {showAvatar && !isOwn && (
           <div className="flex items-center gap-1.5 mb-1 pl-1">
@@ -473,7 +473,7 @@ export default function LoungePage({ params }: { params: Promise<{ id: string }>
 
   return (
     <AppLayout title={`Lounge — ${classData.name}`} activeNav="class">
-      <div className="flex flex-col h-[calc(100vh-64px-2rem)] md:h-[calc(100vh-64px-4rem)] max-w-[1200px] mx-auto">
+      <div className="flex flex-col h-[calc(100vh-64px-68px-1rem)] md:h-[calc(100vh-64px-4rem)] max-w-[1200px] mx-auto">
         {/* ── Channel Bar ── */}
         <div className="flex items-center gap-3 mb-3 shrink-0">
           {/* Channel chips */}
