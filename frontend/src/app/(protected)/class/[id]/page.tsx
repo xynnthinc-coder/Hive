@@ -131,8 +131,8 @@ export default function ClassDetail({ params }: { params: Promise<{ id: string }
 
         if (threadRes.status === 'fulfilled') {
           setThreads(threadRes.value.data || []);
-          setThreadPage(threadRes.value.current_page || 1);
-          setThreadLastPage(threadRes.value.last_page || 1);
+          setThreadPage(threadRes.value.meta?.current_page || 1);
+          setThreadLastPage(threadRes.value.meta?.last_page || 1);
         }
 
         if (channelRes.status === 'fulfilled') {
@@ -171,8 +171,8 @@ export default function ClassDetail({ params }: { params: Promise<{ id: string }
         if (selectedChannel) params.channel_id = selectedChannel;
         const res = await threadService.list(classId, params);
         setThreads(res.data || []);
-        setThreadPage(res.current_page || 1);
-        setThreadLastPage(res.last_page || 1);
+        setThreadPage(res.meta?.current_page || 1);
+        setThreadLastPage(res.meta?.last_page || 1);
       } catch { /* silent */ }
       finally { setLoading(false); }
     };
@@ -186,8 +186,8 @@ export default function ClassDetail({ params }: { params: Promise<{ id: string }
       if (selectedChannel) params.channel_id = selectedChannel;
       const res = await threadService.list(classId, params);
       setThreads(res.data || []);
-      setThreadPage(res.current_page || 1);
-      setThreadLastPage(res.last_page || 1);
+      setThreadPage(res.meta?.current_page || 1);
+      setThreadLastPage(res.meta?.last_page || 1);
     } catch { /* silent */ }
     setLoadingThreads(false);
   };

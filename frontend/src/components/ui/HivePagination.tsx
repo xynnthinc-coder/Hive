@@ -8,7 +8,6 @@ interface HivePaginationProps {
 }
 
 export default function HivePagination({ currentPage, lastPage, onPageChange, className = '' }: HivePaginationProps) {
-  if (lastPage <= 1) return null;
 
   const getPages = () => {
     const pages: (number | string)[] = [];
