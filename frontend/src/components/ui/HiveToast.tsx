@@ -21,11 +21,17 @@ export default function HiveToast() {
 
   useEffect(() => {
     addToastFn = (message, type) => {
-      const id = ++toastId;
-      setToasts((prev) => [...prev, { id, message, type }]);
-      setTimeout(() => {
-        setToasts((prev) => prev.filter((t) => t.id !== id));
-      }, 3000);
+      setToasts((prev) => {
+        // Deduplicate: if the exact same message already exists, don't add it again
+        if (prev.some((t) => t.message === message)) {
+          return prev;
+        }
+        const id = ++toastId;
+        setTimeout(() => {
+          setToasts((current) => current.filter((t) => t.id !== id));
+        }, 3000);
+        return [...prev, { id, message, type }];
+      });
     };
     return () => { addToastFn = null; };
   }, []);
