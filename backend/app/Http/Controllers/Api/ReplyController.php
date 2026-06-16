@@ -39,21 +39,8 @@ class ReplyController extends Controller
             $parent = Reply::find($request->parent_id);
 
             // Ensure parent belongs to the same thread
-            if ($parent->thread_id !== $thread->id) {
+            if ($parent->thread_id != $thread->id) {
                 return response()->json(['message' => 'Parent reply tidak valid.'], 422);
-            }
-
-            // Check nesting depth
-            $depth = 0;
-            $current = $parent;
-            while ($current->parent_id) {
-                $depth++;
-                $current = $current->parent;
-                if ($depth >= 2) { // Max 3 levels (0, 1, 2)
-                    return response()->json([
-                        'message' => 'Balasan maksimal 3 level.',
-                    ], 422);
-                }
             }
         }
 
@@ -69,7 +56,7 @@ class ReplyController extends Controller
         $thread->update(['last_activity_at' => now()]);
 
         // Notify thread owner (if not self)
-        if ($thread->user_id !== $user->id) {
+        if ($thread->user_id != $user->id) {
             Notification::onReply(
                 $thread->user_id,
                 $user->display_name,
@@ -94,7 +81,7 @@ class ReplyController extends Controller
     {
         $user = $request->user();
 
-        if ($reply->user_id !== $user->id) {
+        if ($reply->user_id != $user->id) {
             return response()->json(['message' => 'Kamu tidak bisa mengedit balasan ini.'], 403);
         }
 
@@ -166,7 +153,7 @@ class ReplyController extends Controller
         $thread->update(['is_resolved' => $newValue]);
 
         // Notify reply owner (if not self)
-        if ($newValue && $reply->user_id !== $user->id) {
+        if ($newValue && $reply->user_id != $user->id) {
             Notification::onBestAnswer(
                 $reply->user_id,
                 $thread->title,

@@ -89,15 +89,15 @@ function SettingRow({ icon, label, desc, toggle, checked, onToggle, onClick, ico
           {icon}
         </div>
         <div className="min-w-0">
-          <div className="flex items-center gap-2">
-            <span className="text-[0.875rem] font-semibold text-on-surface">{label}</span>
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-[0.875rem] font-semibold text-on-surface truncate max-w-full">{label}</span>
             {badge && (
-              <span className="px-1.5 py-0.5 text-[0.6rem] font-bold uppercase tracking-wider rounded-md bg-surface-container-highest text-on-surface-variant/60">
+              <span className="px-1.5 py-0.5 text-[0.6rem] font-bold uppercase tracking-wider rounded-md bg-surface-container-highest text-on-surface-variant/60 shrink-0">
                 {badge}
               </span>
             )}
           </div>
-          <p className="text-xs text-on-surface-variant/70 truncate">{desc}</p>
+          <p className="text-xs text-on-surface-variant/70 break-words line-clamp-2">{desc}</p>
         </div>
       </div>
       {toggle

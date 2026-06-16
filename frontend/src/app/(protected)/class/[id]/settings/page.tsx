@@ -241,12 +241,12 @@ export default function ClassSettings({ params }: { params: Promise<{ id: string
         <HiveCard padding="lg" className="relative overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-honey/30 to-transparent" />
           <div className="flex items-start justify-between gap-4 flex-wrap">
-            <div>
-              <h2 className="text-xl font-bold mb-1">{classData.name}</h2>
-              <p className="text-sm text-on-surface-variant mb-2">{classData.description || 'Tidak ada deskripsi'}</p>
-              <div className="flex items-center gap-3 text-xs text-on-surface-variant">
+            <div className="min-w-0 flex-1">
+              <h2 className="text-xl font-bold mb-1 truncate">{classData.name}</h2>
+              <p className="text-sm text-on-surface-variant mb-2 break-words">{classData.description || 'Tidak ada deskripsi'}</p>
+              <div className="flex items-center gap-3 text-xs text-on-surface-variant flex-wrap">
                 <span>Tahun: <strong>{classData.academic_year}</strong></span>
-                <span>Kode: <strong className="text-honey">{classData.invite_code}</strong></span>
+                <span>Kode: <strong className="text-honey break-all">{classData.invite_code}</strong></span>
                 <span>{members.length} anggota</span>
               </div>
             </div>
@@ -278,7 +278,7 @@ export default function ClassSettings({ params }: { params: Promise<{ id: string
                   <span className="text-lg shrink-0">{ch.icon || '#'}</span>
                   <div className="min-w-0 flex-1">
                     <span className="text-sm font-semibold text-on-surface block truncate">{ch.name}</span>
-                    {ch.description && <p className="text-xs text-on-surface-variant truncate">{ch.description}</p>}
+                    {ch.description && <p className="text-xs text-on-surface-variant break-words line-clamp-2">{ch.description}</p>}
                   </div>
                 </div>
                 <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto flex-wrap">

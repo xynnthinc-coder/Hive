@@ -102,29 +102,39 @@ class ThreadController extends Controller
             'user',
             'forumChannel',
             'userVote',
-            'replies' => function ($q) {
-                $q->whereNull('parent_id')
-                  ->with([
-                      'user', 'userVote',
-                      'children' => function ($q2) {
-                          $q2->with([
-                              'user', 'userVote',
-                              'children' => function ($q3) {
-                                  $q3->with(['user', 'userVote'])
-                                     ->orderBy('created_at', 'asc');
-                              },
-                          ])->orderBy('created_at', 'asc');
-                      },
-                  ])
-                  ->orderByDesc('is_best_answer')
-                  ->orderByDesc('vote_count')
-                  ->orderBy('created_at', 'asc');
-            },
         ]);
+
+        // Load all replies flat with relations
+        $allReplies = $thread->replies()
+            ->with(['user', 'userVote'])
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        // Build tree in memory
+        $repliesById = [];
+        foreach ($allReplies as $reply) {
+            $reply->setRelation('children', collect());
+            $repliesById[$reply->id] = $reply;
+        }
+
+        $rootReplies = collect();
+        foreach ($allReplies as $reply) {
+            if ($reply->parent_id && isset($repliesById[$reply->parent_id])) {
+                $repliesById[$reply->parent_id]->children->push($reply);
+            } else {
+                $rootReplies->push($reply);
+            }
+        }
+
+        // Sort root replies: Best answer first, then by vote count
+        $rootReplies = $rootReplies
+            ->sortByDesc('vote_count')
+            ->sortByDesc('is_best_answer')
+            ->values();
 
         return response()->json([
             'thread' => new ThreadResource($thread),
-            'replies' => \App\Http\Resources\ReplyResource::collection($thread->replies),
+            'replies' => \App\Http\Resources\ReplyResource::collection($rootReplies),
         ]);
     }
 

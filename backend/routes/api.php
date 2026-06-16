@@ -24,6 +24,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
+// Serve attachments publicly (for img tags in markdown)
+Route::get('/attachments/{filename}', [AttachmentController::class, 'show']);
+
 // ─── Protected Routes ────────────────────────────────
 Route::middleware('auth:sanctum')->group(function () {
 

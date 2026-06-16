@@ -9,6 +9,7 @@ import { searchService, type SearchThread } from '@/services/search';
 import { notificationService } from '@/services/notification';
 import HiveLogo from './HiveLogo';
 import HiveAvatar from './ui/HiveAvatar';
+import { showToast } from '@/components/ui/HiveToast';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -257,10 +258,14 @@ export default function AppLayout({ children, title = 'Dashboard', activeNav }: 
           if (classes.length > 0) {
             navigate(`/class/${classes[0].id}/lounge`);
           } else {
+            showToast('Join class terlebih dahulu', 'error');
             navigate('/dashboard');
           }
         })
-        .catch(() => navigate('/dashboard'));
+        .catch(() => {
+            showToast('Join class terlebih dahulu', 'error');
+            navigate('/dashboard');
+        });
     }
   };
 
