@@ -480,7 +480,7 @@ export default function AppLayout({ children, title = 'Dashboard', activeNav }: 
       {/* ═══════════════════════════════════════════════════════════════
           Main Content Area
          ═══════════════════════════════════════════════════════════════ */}
-      <main className="flex-1 md:ml-[260px] min-h-screen flex flex-col pb-20 md:pb-0">
+      <main className="flex-1 md:ml-[260px] min-h-screen flex flex-col pb-20 md:pb-0 overflow-x-hidden">
         {/* Header */}
         <header className="px-4 md:px-8 h-16 flex items-center justify-between glass-bg border-b border-outline-variant/10 sticky top-0 z-40">
           <div className="flex items-center gap-3 min-w-0 flex-1">
@@ -594,7 +594,7 @@ export default function AppLayout({ children, title = 'Dashboard', activeNav }: 
         </header>
 
         {/* Page Content */}
-        <div className="p-4 md:p-6 lg:p-8 flex-1 animate-slide-up overflow-x-hidden">
+        <div className="p-4 md:p-6 lg:p-8 flex-1 animate-slide-up">
           {children}
         </div>
       </main>

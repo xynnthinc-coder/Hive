@@ -34,7 +34,7 @@ export default function HiveMessageInput({
   };
 
   return (
-    <div className={`relative px-4 py-3 border-t border-outline-variant/10 shrink-0 ${className}`}>
+    <div className={`px-4 py-3 border-t border-outline-variant/10 shrink-0 ${className}`}>
       <div className="flex items-end gap-3 max-w-[1200px] mx-auto w-full">
         <div className="flex-1 relative">
           <textarea
