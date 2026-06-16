@@ -14,7 +14,7 @@ export function stripMarkdown(md: string): string {
     // Remove blockquotes
     .replace(/>\s?/g, '')
     // Remove code blocks
-    .replace(/```.*?```/gs, '')
+    .replace(/```[\s\S]*?```/g, '')
     // Remove inline code
     .replace(/`(.*?)`/g, '$1')
     // Remove strikethrough
