@@ -14,6 +14,7 @@ import HiveButton from '@/components/ui/HiveButton';
 import HiveBadge from '@/components/ui/HiveBadge';
 import HiveAvatar from '@/components/ui/HiveAvatar';
 import HiveEmptyState from '@/components/ui/HiveEmptyState';
+import HivePagination from '@/components/ui/HivePagination';
 
 /* ── Icons ── */
 const IconFire = () => (
@@ -105,8 +106,8 @@ export default function ClassDetail({ params }: { params: Promise<{ id: string }
   const [loading, setLoading] = useState(true);
   const [codeCopied, setCodeCopied] = useState(false);
   const [threadPage, setThreadPage] = useState(1);
-  const [threadHasMore, setThreadHasMore] = useState(false);
-  const [loadingMore, setLoadingMore] = useState(false);
+  const [threadLastPage, setThreadLastPage] = useState(1);
+  const [loadingThreads, setLoadingThreads] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -130,7 +131,8 @@ export default function ClassDetail({ params }: { params: Promise<{ id: string }
 
         if (threadRes.status === 'fulfilled') {
           setThreads(threadRes.value.data || []);
-          setThreadHasMore(threadRes.value.current_page < threadRes.value.last_page);
+          setThreadPage(threadRes.value.current_page || 1);
+          setThreadLastPage(threadRes.value.last_page || 1);
         }
 
         if (channelRes.status === 'fulfilled') {
@@ -169,25 +171,25 @@ export default function ClassDetail({ params }: { params: Promise<{ id: string }
         if (selectedChannel) params.channel_id = selectedChannel;
         const res = await threadService.list(classId, params);
         setThreads(res.data || []);
-        setThreadHasMore(res.current_page < res.last_page);
+        setThreadPage(res.current_page || 1);
+        setThreadLastPage(res.last_page || 1);
       } catch { /* silent */ }
       finally { setLoading(false); }
     };
     reload();
   }, [selectedChannel]);
 
-  const loadMoreThreads = async () => {
-    const nextPage = threadPage + 1;
-    setLoadingMore(true);
+  const loadThreadsPage = async (page: number) => {
+    setLoadingThreads(true);
     try {
-      const params: any = { sort: 'latest', page: nextPage };
+      const params: any = { sort: 'latest', page };
       if (selectedChannel) params.channel_id = selectedChannel;
       const res = await threadService.list(classId, params);
-      setThreads(prev => [...prev, ...(res.data || [])]);
-      setThreadPage(nextPage);
-      setThreadHasMore(res.current_page < res.last_page);
+      setThreads(res.data || []);
+      setThreadPage(res.current_page || 1);
+      setThreadLastPage(res.last_page || 1);
     } catch { /* silent */ }
-    setLoadingMore(false);
+    setLoadingThreads(false);
   };
 
   const copyInviteCode = () => {
@@ -386,23 +388,11 @@ export default function ClassDetail({ params }: { params: Promise<{ id: string }
           </div>
         )}
 
-        {/* Load more button */}
-        {!loading && threadHasMore && (
-          <div className="flex justify-center mt-6">
-            <button
-              className="flex items-center gap-2 border rounded-full py-2.5 px-6 text-xs font-semibold font-sans cursor-pointer transition-default bg-surface-container-high/60 border-outline-variant/10 text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface"
-              onClick={loadMoreThreads}
-              disabled={loadingMore}
-            >
-              {loadingMore ? (
-                <><div className="spinner w-3.5 h-3.5" /> Memuat...</>
-              ) : (
-                'Muat lebih banyak'
-              )}
-            </button>
-          </div>
-        )}
-      </div>
+        <HivePagination 
+          currentPage={threadPage} 
+          lastPage={threadLastPage} 
+          onPageChange={loadThreadsPage} 
+        />
 
       {/* ── FAB ── */}
       <button

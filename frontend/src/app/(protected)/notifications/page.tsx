@@ -7,6 +7,7 @@ import AppLayout from '@/components/AppLayout';
 import HiveCard from '@/components/ui/HiveCard';
 import HiveEmptyState from '@/components/ui/HiveEmptyState';
 import HiveToast, { showToast } from '@/components/ui/HiveToast';
+import HivePagination from '@/components/ui/HivePagination';
 
 const IconBell = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
@@ -53,6 +54,7 @@ export default function Notifications() {
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(false);
   const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
   const [markingAll, setMarkingAll] = useState(false);
 
   useEffect(() => { loadNotifications(1); }, []);
@@ -61,14 +63,11 @@ export default function Notifications() {
     try {
       setLoading(p === 1);
       const res = await notificationService.list(p);
-      if (p === 1) {
-        setNotifications(res.notifications);
-      } else {
-        setNotifications(prev => [...prev, ...res.notifications]);
-      }
+      setNotifications(res.notifications);
       setUnreadCount(res.unread_count);
       setHasMore(res.has_more);
       setPage(p);
+      setLastPage(res.last_page || 1);
     } catch {
       // silent
     } finally { setLoading(false); }
@@ -168,14 +167,11 @@ export default function Notifications() {
               })}
             </div>
 
-            {hasMore && (
-              <button
-                className="w-full mt-4 py-3 text-sm font-semibold text-honey bg-transparent border border-honey/15 rounded-xl cursor-pointer transition-default hover:bg-honey/5 font-sans"
-                onClick={() => loadNotifications(page + 1)}
-              >
-                Muat lebih banyak
-              </button>
-            )}
+            <HivePagination 
+              currentPage={page} 
+              lastPage={lastPage} 
+              onPageChange={loadNotifications} 
+            />
           </>
         )}
       </div>

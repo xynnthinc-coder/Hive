@@ -24,6 +24,7 @@ class NotificationController extends Controller
             'unread_count' => Notification::where('user_id', $user->id)->where('is_read', false)->count(),
             'has_more' => $notifications->hasMorePages(),
             'current_page' => $notifications->currentPage(),
+            'last_page' => $notifications->lastPage(),
         ]);
     }
 

@@ -127,19 +127,18 @@ class AuthController extends Controller
         ]);
     }
 
-    /**
-     * Get user's recent activity feed.
-     */
     public function activity(Request $request)
     {
         $user = $request->user();
+        $page = (int) $request->get('page', 1);
+        $perPage = 10;
 
-        // Recent threads
+        // Recent threads (limit 100 for memory efficiency)
         $threads = $user->threads()
             ->with('forumChannel:id,name,icon,class_id', 'forumChannel.classRoom:id,name')
             ->select('id', 'forum_channel_id', 'title', 'vote_count', 'reply_count', 'created_at')
             ->orderByDesc('created_at')
-            ->limit(10)
+            ->limit(100)
             ->get()
             ->map(fn($t) => [
                 'type' => 'thread',
@@ -153,12 +152,12 @@ class AuthController extends Controller
                 'created_at' => $t->created_at,
             ]);
 
-        // Recent replies
+        // Recent replies (limit 100)
         $replies = $user->replies()
             ->with('thread:id,title,forum_channel_id', 'thread.forumChannel:id,class_id', 'thread.forumChannel.classRoom:id,name')
             ->select('id', 'thread_id', 'body', 'is_best_answer', 'vote_count', 'created_at')
             ->orderByDesc('created_at')
-            ->limit(10)
+            ->limit(100)
             ->get()
             ->map(fn($r) => [
                 'type' => $r->is_best_answer ? 'best_answer' : 'reply',
@@ -172,13 +171,21 @@ class AuthController extends Controller
                 'created_at' => $r->created_at,
             ]);
 
-        // Merge and sort by date
+        // Merge, sort, and manually paginate
         $activity = $threads->concat($replies)
             ->sortByDesc('created_at')
-            ->take(15)
             ->values();
 
-        return response()->json(['activity' => $activity]);
+        $total = $activity->count();
+        $results = $activity->slice(($page - 1) * $perPage, $perPage)->values();
+
+        return response()->json([
+            'activity' => $results,
+            'current_page' => $page,
+            'last_page' => (int) ceil($total / $perPage),
+            'total' => $total,
+            'has_more' => ($page * $perPage) < $total,
+        ]);
     }
 
     /**

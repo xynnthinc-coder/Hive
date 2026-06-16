@@ -96,7 +96,7 @@ const authService = {
     return response.data;
   },
 
-  async activity(): Promise<{
+  async activity(page: number = 1): Promise<{
     activity: Array<{
       type: 'thread' | 'reply' | 'best_answer';
       id: number;
@@ -110,8 +110,12 @@ const authService = {
       reply_count?: number;
       created_at: string;
     }>;
+    current_page: number;
+    last_page: number;
+    total: number;
+    has_more: boolean;
   }> {
-    const response = await api.get('/user/activity');
+    const response = await api.get(`/user/activity?page=${page}`);
     return response.data;
   },
 };

@@ -12,6 +12,7 @@ import HiveAvatar from '@/components/ui/HiveAvatar';
 import HiveModal from '@/components/ui/HiveModal';
 import { HiveInput } from '@/components/ui/HiveInput';
 import HiveToast, { showToast } from '@/components/ui/HiveToast';
+import HivePagination from '@/components/ui/HivePagination';
 
 const IconChat = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -119,23 +120,38 @@ export default function Profile() {
     class_id?: number; class_name?: string; thread_id?: number;
     vote_count?: number; reply_count?: number; created_at: string;
   }>>([]);
+  const [activityPage, setActivityPage] = useState(1);
+  const [activityLastPage, setActivityLastPage] = useState(1);
   const [statsLoading, setStatsLoading] = useState(true);
+  const [activityLoading, setActivityLoading] = useState(true);
 
   useEffect(() => {
-    const loadData = async () => {
+    const loadStats = async () => {
       try {
-        const [statsRes, actRes] = await Promise.allSettled([
-          authService.stats(),
-          authService.activity()
-        ]);
-        
-        if (statsRes.status === 'fulfilled') setStats(statsRes.value);
-        if (actRes.status === 'fulfilled') setActivity(actRes.value.activity);
-      } finally {
+        const res = await authService.stats();
+        setStats(res);
+      } catch {} finally {
         setStatsLoading(false);
       }
     };
-    loadData();
+    loadStats();
+  }, []);
+
+  const loadActivity = async (page: number) => {
+    setActivityLoading(true);
+    try {
+      // Assuming authService.activity() now accepts page parameter
+      const actRes = await authService.activity(page);
+      setActivity(actRes.activity || actRes); // fallback if structure changed
+      setActivityPage(actRes.current_page || 1);
+      setActivityLastPage(actRes.last_page || 1);
+    } catch {} finally {
+      setActivityLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadActivity(1);
   }, []);
 
   const memberSince = user?.created_at
@@ -300,7 +316,7 @@ export default function Profile() {
               )}
             </div>
 
-            {statsLoading ? (
+            {activityLoading ? (
               <div className="flex flex-col gap-3">
                 {[...Array(4)].map((_, i) => (
                   <div key={i} className="flex items-center gap-3 py-2">
@@ -354,6 +370,11 @@ export default function Profile() {
                     </button>
                   );
                 })}
+                <HivePagination 
+                  currentPage={activityPage} 
+                  lastPage={activityLastPage} 
+                  onPageChange={loadActivity} 
+                />
               </div>
             )}
           </div>

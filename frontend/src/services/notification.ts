@@ -22,6 +22,7 @@ export const notificationService = {
     unread_count: number;
     has_more: boolean;
     current_page: number;
+    last_page: number;
   }> {
     const response = await api.get('/notifications', { params: { page } });
     return response.data;
