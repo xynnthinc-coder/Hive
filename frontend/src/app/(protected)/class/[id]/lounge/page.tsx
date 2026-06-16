@@ -627,23 +627,23 @@ export default function LoungePage({ params }: { params: Promise<{ id: string }>
           {/* Scroll to bottom button */}
           {showScrollBtn && (
             <button
-              className="absolute bottom-20 right-4 z-10 w-9 h-9 rounded-full bg-surface-container-highest/90 backdrop-blur-sm border border-outline-variant/20 flex items-center justify-center cursor-pointer transition-default hover:bg-honey/20 hover:border-honey/30 text-on-surface-variant hover:text-honey shadow-lg"
+              className="absolute bottom-6 right-4 z-10 w-9 h-9 rounded-full bg-surface-container-highest/90 backdrop-blur-sm border border-outline-variant/20 flex items-center justify-center cursor-pointer transition-default hover:bg-honey/20 hover:border-honey/30 text-on-surface-variant hover:text-honey shadow-lg"
               onClick={() => scrollToBottom('smooth')}
             >
               <IconArrowDown />
             </button>
           )}
+        </div>
 
-          {/* ── Input Bar ── */}
-          <div className="z-40 bg-surface-container-highest/80 backdrop-blur-xl pb-2 md:pb-4 rounded-t-2xl mt-2">
-            <HiveMessageInput
-              value={inputText}
-              onChange={setInputText}
-              onSend={handleSend}
-              sending={sending}
-              placeholder="Tulis pesan di lounge..."
-            />
-          </div>
+        {/* ── Input Bar ── */}
+        <div className="shrink-0 z-40 bg-surface-container-low backdrop-blur-xl pb-2 md:pb-4 pt-2">
+          <HiveMessageInput
+            value={inputText}
+            onChange={setInputText}
+            onSend={handleSend}
+            sending={sending}
+            placeholder="Tulis pesan di lounge..."
+          />
         </div>
       </div>
 

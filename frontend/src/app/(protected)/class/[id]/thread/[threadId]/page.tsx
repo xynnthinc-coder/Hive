@@ -253,8 +253,7 @@ function ReplyItem({
   return (
     <div
       className={`${
-        depth === 1 ? "ml-3 md:ml-8 pl-3 md:pl-4 border-l-2 border-outline-variant/15" :
-        depth > 1 ? "mt-2" : ""
+        depth > 0 ? "ml-3 md:ml-8 pl-3 md:pl-4 border-l-2 border-outline-variant/15" : ""
       }`}
     >
       <HiveCard
@@ -389,27 +388,20 @@ function ReplyItem({
           </div>
         )}
       </HiveCard>
-
-      {/* Nested children */}
-      {reply.children && reply.children.length > 0 && (
-        <div className="flex flex-col gap-2 mt-2">
-          {reply.children.map((child) => (
-            <ReplyItem
-              key={child.id}
-              reply={child}
-              classId={classId}
-              threadId={threadId}
-              depth={depth + 1}
-              userId={userId}
-              myRole={myRole}
-              onRefresh={onRefresh}
-              parentAuthorName={reply.user?.nickname || reply.user?.name}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
+}
+
+// Helper to flatten nested replies into a single flat array
+function flattenReplies(replies: Reply[], depth = 0, parentName?: string): (Reply & { _depth: number; _parentName?: string })[] {
+  let result: any[] = [];
+  for (const r of replies) {
+    result.push({ ...r, _depth: depth, _parentName: parentName });
+    if (r.children && r.children.length > 0) {
+      result = result.concat(flattenReplies(r.children, depth + 1, r.user?.nickname || r.user?.name));
+    }
+  }
+  return result;
 }
 
 /* ── Main Thread Detail Page ── */
@@ -698,16 +690,17 @@ export default function ThreadDetail({
             </div>
           ) : (
             <div className="flex flex-col gap-2">
-              {replies.map((reply) => (
+              {flattenReplies(replies).map((flatReply) => (
                 <ReplyItem
-                  key={reply.id}
-                  reply={reply}
+                  key={flatReply.id}
+                  reply={flatReply}
                   classId={classId}
                   threadId={threadId}
-                  depth={0}
+                  depth={flatReply._depth}
                   userId={user?.id}
                   myRole={myRole}
                   onRefresh={loadThread}
+                  parentAuthorName={flatReply._parentName}
                 />
               ))}
             </div>
