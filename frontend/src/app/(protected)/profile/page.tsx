@@ -140,12 +140,15 @@ export default function Profile() {
   const loadActivity = async (page: number) => {
     setActivityLoading(true);
     try {
-      // Assuming authService.activity() now accepts page parameter
       const actRes = await authService.activity(page);
-      setActivity(actRes.activity || actRes); // fallback if structure changed
+      console.log('[DEBUG] activity response:', actRes);
+      console.log('[DEBUG] last_page:', actRes.last_page, '| current_page:', actRes.current_page, '| total:', actRes.total);
+      setActivity(actRes.activity || []);
       setActivityPage(actRes.current_page || 1);
       setActivityLastPage(actRes.last_page || 1);
-    } catch {} finally {
+    } catch (err) {
+      console.error('[DEBUG] activity error:', err);
+    } finally {
       setActivityLoading(false);
     }
   };
