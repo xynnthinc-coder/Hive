@@ -111,7 +111,7 @@ class MessageController extends Controller
         $channel = $message->chatChannel;
         $class = $channel->classRoom;
 
-        $isAuthor = $message->user_id === $user->id;
+        $isAuthor = $message->user_id == $user->id;
         $isTeacher = ClassMember::where('class_id', $class->id)
             ->where('user_id', $user->id)
             ->where('role', 'teacher')
@@ -137,7 +137,7 @@ class MessageController extends Controller
             'type' => $message->type,
             'metadata' => $message->metadata,
             'is_pinned' => $message->is_pinned,
-            'is_own' => $message->user_id === $currentUser->id,
+            'is_own' => $message->user_id == $currentUser->id,
             'user' => $message->user ? [
                 'id' => $message->user->id,
                 'name' => $message->user->name,

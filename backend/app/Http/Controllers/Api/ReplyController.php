@@ -118,7 +118,7 @@ class ReplyController extends Controller
     {
         $user = $request->user();
 
-        $isAuthor = $reply->user_id === $user->id;
+        $isAuthor = $reply->user_id == $user->id;
 
         // Check if user is teacher in the class containing this reply's thread
         $thread = $reply->thread;

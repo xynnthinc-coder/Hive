@@ -473,7 +473,7 @@ export default function LoungePage({ params }: { params: Promise<{ id: string }>
 
   return (
     <AppLayout title={`Lounge`} activeNav="class">
-      <div className="flex flex-col h-[calc(100vh-64px-68px-1rem)] md:h-[calc(100vh-64px-4rem)] max-w-[1200px] mx-auto w-full overflow-hidden">
+      <div className="flex flex-col h-[calc(100dvh-64px-68px-1rem)] md:h-[calc(100dvh-64px-4rem)] max-w-[1200px] mx-auto w-full overflow-hidden">
         {/* ── Channel Bar ── */}
         <div className="flex items-center gap-2 md:gap-3 mb-3 shrink-0 overflow-hidden">
           {/* Channel chips */}
@@ -553,7 +553,7 @@ export default function LoungePage({ params }: { params: Promise<{ id: string }>
           {/* Messages scroll area */}
           <div
             ref={messagesContainerRef}
-            className="relative flex-1 overflow-y-auto px-4 md:px-5 py-4 pb-24 md:pb-32 flex flex-col gap-1"
+            className="relative flex-1 overflow-y-auto px-4 md:px-5 py-4 flex flex-col gap-1"
             onScroll={handleScroll}
           >
             {/* Loading older */}
@@ -627,7 +627,7 @@ export default function LoungePage({ params }: { params: Promise<{ id: string }>
           {/* Scroll to bottom button */}
           {showScrollBtn && (
             <button
-              className="fixed bottom-24 md:bottom-28 right-4 z-50 w-9 h-9 rounded-full bg-surface-container-highest/90 backdrop-blur-sm border border-outline-variant/20 flex items-center justify-center cursor-pointer transition-default hover:bg-honey/20 hover:border-honey/30 text-on-surface-variant hover:text-honey shadow-lg"
+              className="absolute bottom-20 right-4 z-10 w-9 h-9 rounded-full bg-surface-container-highest/90 backdrop-blur-sm border border-outline-variant/20 flex items-center justify-center cursor-pointer transition-default hover:bg-honey/20 hover:border-honey/30 text-on-surface-variant hover:text-honey shadow-lg"
               onClick={() => scrollToBottom('smooth')}
             >
               <IconArrowDown />
@@ -635,14 +635,15 @@ export default function LoungePage({ params }: { params: Promise<{ id: string }>
           )}
 
           {/* ── Input Bar ── */}
-          <HiveMessageInput
-            value={inputText}
-            onChange={setInputText}
-            onSend={handleSend}
-            sending={sending}
-            placeholder="Tulis pesan di lounge..."
-            className="fixed bottom-[68px] md:bottom-0 left-0 right-0 md:left-[260px] z-40 bg-[#0a1224]/80 backdrop-blur-xl shadow-[0_-20px_40px_-10px_rgba(0,0,0,0.3)] animate-fade-up pb-2 md:pb-4 rounded-t-2xl"
-          />
+          <div className="z-40 bg-surface-container-highest/80 backdrop-blur-xl pb-2 md:pb-4 rounded-t-2xl mt-2">
+            <HiveMessageInput
+              value={inputText}
+              onChange={setInputText}
+              onSend={handleSend}
+              sending={sending}
+              placeholder="Tulis pesan di lounge..."
+            />
+          </div>
         </div>
       </div>
 

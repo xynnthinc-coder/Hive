@@ -205,7 +205,7 @@ class ThreadController extends Controller
     {
         $user = $request->user();
 
-        $isAuthor = $thread->user_id === $user->id;
+        $isAuthor = $thread->user_id == $user->id;
         $isTeacher = $user->isTeacherOf($class);
 
         if (!$isAuthor && !$isTeacher) {
