@@ -72,7 +72,7 @@ class ForumChannelController extends Controller
             return response()->json(['message' => 'Hanya guru yang bisa mengedit channel.'], 403);
         }
 
-        if ($channel->class_id !== $class->id) {
+        if ($channel->class_id != $class->id) {
             return response()->json(['message' => 'Channel tidak ditemukan di kelas ini.'], 404);
         }
 
@@ -102,7 +102,7 @@ class ForumChannelController extends Controller
             return response()->json(['message' => 'Hanya guru yang bisa menghapus channel.'], 403);
         }
 
-        if ($channel->class_id !== $class->id) {
+        if ($channel->class_id != $class->id) {
             return response()->json(['message' => 'Channel tidak ditemukan di kelas ini.'], 404);
         }
 

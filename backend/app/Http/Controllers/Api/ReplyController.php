@@ -25,7 +25,7 @@ class ReplyController extends Controller
 
         // Verify thread belongs to this class
         $channel = $thread->forumChannel;
-        if (!$channel || $channel->class_id !== $class->id) {
+        if (!$channel || $channel->class_id != $class->id) {
             return response()->json(['message' => 'Thread tidak ditemukan di kelas ini.'], 404);
         }
 

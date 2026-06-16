@@ -398,7 +398,7 @@ export default function Dashboard() {
             <span className="text-honey"><IconFire /></span>
             <span className="text-[0.65rem] font-bold uppercase tracking-[0.15em] text-honey">Hot Today</span>
           </div>
-          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-none">
+          <div className="flex gap-3 overflow-x-auto pb-4 pt-2 -my-2 px-1 -mx-1 scrollbar-none">
             {hotThreads.map(thread => (
               <HiveCard
                 key={thread.id}

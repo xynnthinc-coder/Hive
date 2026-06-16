@@ -36,7 +36,14 @@ class ClassRoom extends Model
     {
         static::creating(function (ClassRoom $class) {
             if (empty($class->slug)) {
-                $class->slug = Str::slug($class->name);
+                $slug = Str::slug($class->name);
+                $originalSlug = $slug;
+                $count = 1;
+                while (ClassRoom::where('slug', $slug)->exists()) {
+                    $count++;
+                    $slug = "{$originalSlug}-{$count}";
+                }
+                $class->slug = $slug;
             }
             if (empty($class->invite_code)) {
                 $class->invite_code = strtoupper(Str::random(8));

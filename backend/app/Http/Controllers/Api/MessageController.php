@@ -19,7 +19,7 @@ class MessageController extends Controller
             return response()->json(['message' => 'Kamu bukan anggota kelas ini.'], 403);
         }
 
-        if ($channel->class_id !== $class->id) {
+        if ($channel->class_id != $class->id) {
             return response()->json(['message' => 'Channel tidak ditemukan di kelas ini.'], 404);
         }
 
@@ -55,7 +55,7 @@ class MessageController extends Controller
             return response()->json(['message' => 'Kamu bukan anggota kelas ini.'], 403);
         }
 
-        if ($channel->class_id !== $class->id) {
+        if ($channel->class_id != $class->id) {
             return response()->json(['message' => 'Channel tidak ditemukan di kelas ini.'], 404);
         }
 
@@ -81,7 +81,7 @@ class MessageController extends Controller
             return response()->json(['message' => 'Kamu bukan anggota kelas ini.'], 403);
         }
 
-        if ($channel->class_id !== $class->id) {
+        if ($channel->class_id != $class->id) {
             return response()->json(['message' => 'Channel tidak ditemukan di kelas ini.'], 404);
         }
 
