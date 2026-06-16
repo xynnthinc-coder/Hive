@@ -394,6 +394,8 @@ export default function ClassDetail({ params }: { params: Promise<{ id: string }
           onPageChange={loadThreadsPage} 
         />
 
+      </div>
+
       {/* ── FAB ── */}
       <button
         className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-30 w-14 h-14 rounded-2xl gradient-honey border-none text-[#1a0e00] cursor-pointer flex items-center justify-center shadow-[0_8px_32px_rgba(245,166,35,0.35)] transition-default hover:scale-110 hover:shadow-[0_12px_40px_rgba(245,166,35,0.5)] max-md:bottom-[calc(64px+16px)]"
