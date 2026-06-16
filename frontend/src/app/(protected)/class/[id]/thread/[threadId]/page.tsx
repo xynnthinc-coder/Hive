@@ -252,18 +252,16 @@ function ReplyItem({
 
   return (
     <div
-      className={`${
-        depth > 0 ? "ml-3 md:ml-8 pl-3 md:pl-4 border-l-2 border-outline-variant/15" : ""
-      }`}
+      className={depth > 0 ? "ml-4 md:ml-8 pl-3 md:pl-4 border-l-2 border-outline-variant/15" : ""}
     >
       <HiveCard
         padding="md"
         className={`${reply.is_best_answer ? "border-honey/25" : ""}`}
       >
-        {/* Replying to indicator for flat nested replies */}
-        {depth > 1 && parentAuthorName && (
+        {/* Replying-to indicator */}
+        {parentAuthorName && (
           <div className="text-[0.65rem] text-on-surface-variant/80 mb-2 font-medium flex items-center gap-1.5">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 10 20 15 15 20"/><path d="M4 4v7a4 4 0 004 4h12"/></svg>
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 00-4-4H4"/></svg>
             Membalas <span className="text-honey font-bold">@{parentAuthorName}</span>
           </div>
         )}
@@ -324,14 +322,12 @@ function ReplyItem({
               <IconArrowDown active={myVote === -1} />
             </span>
           </VoteBtn>
-          {depth < 2 && (
-            <ActionBtn onClick={() => setShowReplyForm(!showReplyForm)}>
-              <span className="w-3.5 h-3.5">
-                <IconReply />
-              </span>{" "}
-              Balas
-            </ActionBtn>
-          )}
+          <ActionBtn onClick={() => setShowReplyForm(!showReplyForm)}>
+            <span className="w-3.5 h-3.5">
+              <IconReply />
+            </span>{" "}
+            Balas
+          </ActionBtn>
           {isTeacher && (
             <ActionBtn
               onClick={handleBestAnswer}

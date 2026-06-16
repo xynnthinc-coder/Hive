@@ -473,9 +473,9 @@ export default function LoungePage({ params }: { params: Promise<{ id: string }>
 
   return (
     <AppLayout title={`Lounge`} activeNav="class">
-      <div className="flex flex-col h-[calc(100dvh-176px)] md:h-[calc(100dvh-112px)] lg:h-[calc(100dvh-128px)] max-w-[1200px] mx-auto w-full overflow-hidden">
+      <div className="flex flex-col h-[calc(100dvh-176px)] md:h-[calc(100dvh-112px)] lg:h-[calc(100dvh-128px)] max-w-[1200px] mx-auto w-full">
         {/* ── Channel Bar ── */}
-        <div className="flex items-center gap-2 md:gap-3 mb-3 shrink-0 overflow-hidden">
+        <div className="flex items-center gap-2 md:gap-3 mb-3 shrink-0">
           {/* Channel chips */}
           <div className="flex gap-2 overflow-x-auto scrollbar-none flex-1 py-1">
             {channels.map(ch => (
@@ -518,8 +518,8 @@ export default function LoungePage({ params }: { params: Promise<{ id: string }>
           </div>
         </div>
 
-        {/* ── Messages Container ── */}
-        <div className="flex-1 flex flex-col hive-card overflow-hidden relative">
+        {/* ── Chat Card (messages + input as one visual unit) ── */}
+        <div className="flex-1 flex flex-col hive-card overflow-hidden relative min-h-0">
           {/* Subtle honeycomb overlay */}
           <div className="absolute inset-0 honeycomb-bg rounded-none pointer-events-none" />
 
@@ -550,10 +550,10 @@ export default function LoungePage({ params }: { params: Promise<{ id: string }>
             </div>
           )}
 
-          {/* Messages scroll area */}
+          {/* Messages scroll area — ONLY this part scrolls */}
           <div
             ref={messagesContainerRef}
-            className="relative flex-1 overflow-y-auto px-4 md:px-5 py-4 flex flex-col gap-1"
+            className="relative flex-1 min-h-0 overflow-y-auto px-4 md:px-5 py-4 flex flex-col gap-1"
             onScroll={handleScroll}
           >
             {/* Loading older */}
@@ -627,23 +627,23 @@ export default function LoungePage({ params }: { params: Promise<{ id: string }>
           {/* Scroll to bottom button */}
           {showScrollBtn && (
             <button
-              className="absolute bottom-6 right-4 z-10 w-9 h-9 rounded-full bg-surface-container-highest/90 backdrop-blur-sm border border-outline-variant/20 flex items-center justify-center cursor-pointer transition-default hover:bg-honey/20 hover:border-honey/30 text-on-surface-variant hover:text-honey shadow-lg"
+              className="absolute bottom-16 right-4 z-10 w-9 h-9 rounded-full bg-surface-container-highest/90 backdrop-blur-sm border border-outline-variant/20 flex items-center justify-center cursor-pointer transition-default hover:bg-honey/20 hover:border-honey/30 text-on-surface-variant hover:text-honey shadow-lg"
               onClick={() => scrollToBottom('smooth')}
             >
               <IconArrowDown />
             </button>
           )}
-        </div>
 
-        {/* ── Input Bar ── */}
-        <div className="shrink-0 z-40 bg-surface-container-low backdrop-blur-xl pb-2 md:pb-4 pt-2">
-          <HiveMessageInput
-            value={inputText}
-            onChange={setInputText}
-            onSend={handleSend}
-            sending={sending}
-            placeholder="Tulis pesan di lounge..."
-          />
+          {/* ── Input Bar — inside card, below scroll area, never scrolls ── */}
+          <div className="relative shrink-0 border-t border-outline-variant/10 px-3 md:px-4 py-2 md:py-3">
+            <HiveMessageInput
+              value={inputText}
+              onChange={setInputText}
+              onSend={handleSend}
+              sending={sending}
+              placeholder="Tulis pesan di lounge..."
+            />
+          </div>
         </div>
       </div>
 
