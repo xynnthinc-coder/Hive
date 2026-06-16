@@ -52,13 +52,13 @@ export default function MarkdownEditor({
     setUploading(true);
     try {
       // Insert placeholder
-      const isImage = file.type.startsWith('image/');
       const placeholderText = `\n![Uploading ${file.name}...]()\n`;
       insertText(placeholderText, '');
 
       const res = await attachmentService.upload(file);
       
-      // Replace placeholder with actual URL
+      // Replace placeholder with actual URL using backend MIME type
+      const isImage = res.type?.startsWith('image/') || file.type.startsWith('image/');
       const currentVal = textareaRef.current?.value || '';
       const finalSyntax = isImage ? `\n![${file.name}](${res.url})\n` : `\n[${file.name}](${res.url})\n`;
       const newVal = currentVal.replace(placeholderText, finalSyntax);

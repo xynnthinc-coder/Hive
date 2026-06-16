@@ -23,11 +23,10 @@ class AttachmentController extends Controller
         $extension = $file->getClientOriginalExtension();
         $filename = Str::random(40) . '.' . $extension;
 
-        // Save to storage/app/public/attachments
         $path = $file->storeAs('attachments', $filename, 'public');
 
         return response()->json([
-            'url' => url('/api/attachments/' . $filename),
+            'url' => $request->getSchemeAndHttpHost() . '/api/attachments/' . $filename,
             'name' => $file->getClientOriginalName(),
             'size' => $file->getSize(),
             'type' => $file->getMimeType(),

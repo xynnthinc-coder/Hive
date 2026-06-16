@@ -53,7 +53,7 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: () => void 
     <button
       role="switch"
       aria-checked={checked}
-      className={`relative w-10 h-[22px] rounded-full cursor-pointer transition-all duration-200 border-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50
+      className={`relative w-10 h-[22px] rounded-full cursor-pointer transition-all duration-200 border-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 shrink-0
         ${checked ? 'bg-primary' : 'bg-surface-container-highest'}`}
       onClick={onChange}
     >
