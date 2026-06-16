@@ -19,13 +19,20 @@ const IconCheck = () => (
   </svg>
 );
 
-const typeConfig: Record<string, { bg: string; icon: string }> = {
-  reply: { bg: 'bg-primary/[0.08]', icon: '💬' },
-  vote: { bg: 'bg-honey/[0.08]', icon: '⬆️' },
-  best_answer: { bg: 'bg-secondary/[0.08]', icon: '⭐' },
-  mention: { bg: 'bg-primary/[0.08]', icon: '@' },
-  join: { bg: 'bg-on-surface-variant/[0.06]', icon: '👋' },
-  pin: { bg: 'bg-honey/[0.08]', icon: '📌' },
+const IconReplyNotif = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>;
+const IconVoteNotif = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M12 19V5M5 12l7-7 7 7"/></svg>;
+const IconBestNotif = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>;
+const IconMentionNotif = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 006 0v-1a10 10 0 10-3.92 7.94"/></svg>;
+const IconJoinNotif = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg>;
+const IconPinNotif = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 00-1.11-1.79l-1.78-.9A2 2 0 0115 11.2V6a3 3 0 00-6 0v5.2a2 2 0 01-1.11 1.35l-1.78.9A2 2 0 005 15.24Z"/></svg>;
+
+const typeConfig: Record<string, { bg: string; icon: React.ReactNode }> = {
+  reply: { bg: 'bg-primary/[0.08] text-primary', icon: <IconReplyNotif /> },
+  vote: { bg: 'bg-honey/[0.08] text-honey', icon: <IconVoteNotif /> },
+  best_answer: { bg: 'bg-secondary/[0.08] text-secondary', icon: <IconBestNotif /> },
+  mention: { bg: 'bg-primary/[0.08] text-primary', icon: <IconMentionNotif /> },
+  join: { bg: 'bg-on-surface-variant/[0.06] text-on-surface-variant', icon: <IconJoinNotif /> },
+  pin: { bg: 'bg-honey/[0.08] text-honey', icon: <IconPinNotif /> },
 };
 
 function timeAgo(dateStr: string): string {
@@ -100,7 +107,7 @@ export default function Notifications() {
       <HiveToast />
       <div className="max-w-[1200px] mx-auto">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
           <div>
             <h2 className="text-xl md:text-2xl font-bold tracking-tight mb-1">
               Notifikasi ✦
@@ -110,6 +117,7 @@ export default function Notifications() {
             </p>
           </div>
           {unreadCount > 0 && (
+            <div className="self-end sm:self-auto">
             <button
               disabled={markingAll}
               className="flex items-center gap-1.5 text-xs font-semibold text-honey bg-transparent border border-honey/20 rounded-full py-2 px-4 cursor-pointer transition-default hover:bg-honey/10 font-sans disabled:opacity-50"
@@ -117,6 +125,7 @@ export default function Notifications() {
             >
               <IconCheck /> Tandai semua dibaca
             </button>
+            </div>
           )}
         </div>
 

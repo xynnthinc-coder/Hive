@@ -15,7 +15,7 @@ import HiveModal from "@/components/ui/HiveModal";
 import { HiveInput } from "@/components/ui/HiveInput";
 import MarkdownEditor from "@/components/ui/MarkdownEditor";
 import MarkdownViewer from "@/components/ui/MarkdownViewer";
-import HiveMessageInput from "@/components/ui/HiveMessageInput";
+
 import HiveToast, { showToast } from "@/components/ui/HiveToast";
 
 /* ── Icons ── */
@@ -546,7 +546,7 @@ export default function ThreadDetail({
   return (
     <AppLayout title={thread.forum_channel?.name || "Thread"} activeNav="class">
       <HiveToast />
-      <div className="max-w-[1200px] mx-auto w-full pb-40 md:pb-32">
+      <div className="max-w-[1200px] mx-auto w-full pb-10">
         {/* ── Thread Content ── */}
         <HiveCard padding="lg" className="mb-4 relative overflow-hidden">
           {/* Subtle top glow */}
@@ -589,7 +589,7 @@ export default function ThreadDetail({
                     setShowEditModal(true);
                   }}
                 >
-                  ✏️ Edit
+                  <IconEdit /> Edit
                 </ActionBtn>
               )}
               {(isAuthor || isTeacher) && (
@@ -644,15 +644,31 @@ export default function ThreadDetail({
           </div>
         </HiveCard>
 
-        {/* ── Reply Form (Fixed at Bottom) ── */}
-        <HiveMessageInput
-          value={replyText}
-          onChange={setReplyText}
-          onSend={handleSubmitReply}
-          sending={submitting}
-          placeholder="Tulis balasan..."
-          className="fixed bottom-[68px] md:bottom-0 left-0 right-0 md:left-[260px] z-40 bg-[#0a1224]/80 backdrop-blur-xl shadow-[0_-20px_40px_-10px_rgba(0,0,0,0.3)] animate-fade-up pb-2 md:pb-4 rounded-t-2xl"
-        />
+        {/* ── Reply Form (Inline) ── */}
+        <div className="mt-6 mb-8">
+          <h3 className="text-sm font-bold mb-3 text-on-surface flex items-center gap-2">
+            <span className="w-1 h-4 rounded-full bg-honey" />
+            Tulis Balasan
+          </h3>
+          <div className="flex flex-col gap-2 border border-outline-variant/20 rounded-2xl bg-surface-container-low/30 p-1">
+            <MarkdownEditor
+              value={replyText}
+              onChange={setReplyText}
+              placeholder="Tulis balasan... (Mendukung Markdown & Paste Gambar)"
+              minHeight="120px"
+            />
+            <div className="flex justify-end p-2 border-t border-outline-variant/10">
+              <HiveButton
+                variant="primary"
+                onClick={handleSubmitReply}
+                loading={submitting}
+                disabled={!replyText.trim()}
+              >
+                Kirim Balasan
+              </HiveButton>
+            </div>
+          </div>
+        </div>
 
         {/* ── Replies ── */}
         <div className="mt-6">

@@ -657,13 +657,18 @@ export default function Dashboard() {
               <div className="spinner" />
             </div>
           ) : ntChannels.length > 0 ? (
-            <HiveInput.Select
-              label="Forum Channel"
-              id="nt-channel"
-              value={ntChannelId}
-              onChange={(val) => setNtChannelId(Number(val))}
-              options={ntChannels.map(ch => ({ value: ch.id, label: ch.name, icon: ch.icon || undefined }))}
-            />
+            <div className="flex flex-col gap-1.5">
+              <HiveInput.Select
+                label="Forum Channel"
+                id="nt-channel"
+                value={ntChannelId}
+                onChange={(val) => setNtChannelId(Number(val))}
+                options={ntChannels.map(ch => ({ value: ch.id, label: ch.name, icon: ch.icon || undefined }))}
+              />
+              <p className="text-xs text-on-surface-variant px-1 mt-1">
+                Guru dapat menambahkan channel baru melalui <a href={`/class/${ntClassId}/settings`} className="text-honey hover:underline">Pengaturan Kelas</a>.
+              </p>
+            </div>
           ) : ntClassId ? (
             <p className="text-xs text-on-surface-variant">Tidak ada channel di kelas ini.</p>
           ) : null}

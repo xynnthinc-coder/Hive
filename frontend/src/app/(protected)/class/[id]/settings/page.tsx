@@ -273,15 +273,15 @@ export default function ClassSettings({ params }: { params: Promise<{ id: string
           </div>
           <div className="flex flex-col gap-2">
             {channels.map(ch => (
-              <div key={ch.id} className="flex items-center justify-between py-3 px-4 rounded-xl bg-surface-container-high/30 border border-outline-variant/10">
-                <div className="flex items-center gap-3">
-                  <span className="text-lg">{ch.icon || '#'}</span>
-                  <div>
-                    <span className="text-sm font-semibold text-on-surface">{ch.name}</span>
-                    {ch.description && <p className="text-xs text-on-surface-variant">{ch.description}</p>}
+              <div key={ch.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-3 px-4 rounded-xl bg-surface-container-high/30 border border-outline-variant/10">
+                <div className="flex items-center gap-3 w-full min-w-0">
+                  <span className="text-lg shrink-0">{ch.icon || '#'}</span>
+                  <div className="min-w-0 flex-1">
+                    <span className="text-sm font-semibold text-on-surface block truncate">{ch.name}</span>
+                    {ch.description && <p className="text-xs text-on-surface-variant truncate">{ch.description}</p>}
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto flex-wrap">
                   <HiveBadge variant="primary">{ch.threads_count || 0} threads</HiveBadge>
                   {isTeacher && (
                     <>
@@ -327,19 +327,19 @@ export default function ClassSettings({ params }: { params: Promise<{ id: string
               <div className="text-[0.6rem] font-bold uppercase tracking-[0.15em] text-outline mb-2">Guru</div>
               <div className="flex flex-col gap-1.5">
                 {teachers.map(m => (
-                  <div key={m.id} className="flex items-center justify-between py-2.5 px-3 rounded-xl hover:bg-surface-container-high/30 transition-default">
-                    <div className="flex items-center gap-3">
+                  <div key={m.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-2.5 px-3 rounded-xl hover:bg-surface-container-high/30 transition-default">
+                    <div className="flex items-center gap-3 min-w-0 w-full">
                       <HiveAvatar name={m.name} size="sm" />
-                      <div>
-                        <span className="text-sm font-semibold text-on-surface">{m.display_name || m.name}</span>
-                        <div className="flex items-center gap-1.5">
+                      <div className="min-w-0 flex-1">
+                        <span className="text-sm font-semibold text-on-surface block truncate">{m.display_name || m.name}</span>
+                        <div className="flex items-center gap-1.5 flex-wrap">
                           <HiveBadge variant="teacher"><IconShield /> Guru</HiveBadge>
-                          <span className="text-[0.65rem] text-outline">{m.email}</span>
+                          <span className="text-[0.65rem] text-outline truncate">{m.email}</span>
                         </div>
                       </div>
                     </div>
                     {isTeacher && m.id !== user?.id && (
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex items-center gap-1.5 shrink-0 self-start sm:self-auto flex-wrap">
                         <HiveButton variant="ghost" size="sm" onClick={() => handleRoleToggle(m.id, 'teacher')}>
                           Jadikan Member
                         </HiveButton>
@@ -357,16 +357,16 @@ export default function ClassSettings({ params }: { params: Promise<{ id: string
             <div className="text-[0.6rem] font-bold uppercase tracking-[0.15em] text-outline mb-2">Anggota</div>
             <div className="flex flex-col gap-1.5">
               {regularMembers.map(m => (
-                <div key={m.id} className="flex items-center justify-between py-2.5 px-3 rounded-xl hover:bg-surface-container-high/30 transition-default">
-                  <div className="flex items-center gap-3">
+                <div key={m.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-2.5 px-3 rounded-xl hover:bg-surface-container-high/30 transition-default">
+                  <div className="flex items-center gap-3 min-w-0 w-full">
                     <HiveAvatar name={m.name} size="sm" />
-                    <div>
-                      <span className="text-sm font-semibold text-on-surface">{m.display_name || m.name}</span>
-                      <span className="text-[0.65rem] text-outline ml-2">{m.email}</span>
+                    <div className="min-w-0 flex-1">
+                      <span className="text-sm font-semibold text-on-surface block truncate">{m.display_name || m.name}</span>
+                      <span className="text-[0.65rem] text-outline block truncate">{m.email}</span>
                     </div>
                   </div>
                   {isTeacher && m.id !== user?.id && (
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-1.5 shrink-0 self-start sm:self-auto flex-wrap">
                       <HiveButton variant="ghost" size="sm" onClick={() => handleRoleToggle(m.id, 'member')}>
                         Jadikan Guru
                       </HiveButton>
@@ -389,24 +389,28 @@ export default function ClassSettings({ params }: { params: Promise<{ id: string
             Zona Bahaya
           </h3>
           <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between py-3 px-4 rounded-xl bg-error/[0.03] border border-error/10">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 py-3 px-4 rounded-xl bg-error/[0.03] border border-error/10">
               <div>
                 <div className="text-sm font-semibold text-on-surface">Keluar dari kelas</div>
                 <div className="text-xs text-on-surface-variant">Kamu akan kehilangan akses ke semua diskusi di kelas ini.</div>
               </div>
-              <HiveButton variant="danger" size="sm" icon={<IconDoor />} onClick={handleLeave}>
-                Keluar
-              </HiveButton>
+              <div className="self-end sm:self-auto">
+                <HiveButton variant="danger" size="sm" icon={<IconDoor />} onClick={handleLeave}>
+                  Keluar
+                </HiveButton>
+              </div>
             </div>
             {isCreator && (
-              <div className="flex items-center justify-between py-3 px-4 rounded-xl bg-error/[0.03] border border-error/10">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 py-3 px-4 rounded-xl bg-error/[0.03] border border-error/10">
                 <div>
                   <div className="text-sm font-semibold text-error">Hapus kelas</div>
                   <div className="text-xs text-on-surface-variant">Menghapus kelas secara permanen. Tidak bisa dibatalkan.</div>
                 </div>
-                <HiveButton variant="danger" size="sm" icon={<IconTrash />} onClick={handleDelete}>
-                  Hapus Kelas
-                </HiveButton>
+                <div className="self-end sm:self-auto">
+                  <HiveButton variant="danger" size="sm" icon={<IconTrash />} onClick={handleDelete}>
+                    Hapus Kelas
+                  </HiveButton>
+                </div>
               </div>
             )}
           </div>
@@ -430,7 +434,7 @@ export default function ClassSettings({ params }: { params: Promise<{ id: string
       <HiveModal open={showChannel} onClose={() => setShowChannel(false)} title="Buat Forum Channel">
         <form onSubmit={handleCreateChannel} className="flex flex-col gap-5">
           <HiveInput label="Nama channel" placeholder="Matematika" value={channelData.name} onChange={e => setChannelData({...channelData, name: e.target.value})} required />
-          <HiveInput label="Ikon (emoji)" placeholder="📐" value={channelData.icon} onChange={e => setChannelData({...channelData, icon: e.target.value})} maxLength={4} />
+          <HiveInput label="Ikon (opsional)" placeholder="#" value={channelData.icon} onChange={e => setChannelData({...channelData, icon: e.target.value})} maxLength={4} />
           <HiveInput.Textarea label="Deskripsi (opsional)" placeholder="Diskusi seputar..." value={channelData.description} onChange={e => setChannelData({...channelData, description: e.target.value})} rows={2} />
           <div className="flex gap-2 justify-end">
             <HiveButton variant="secondary" type="button" onClick={() => setShowChannel(false)}>Batal</HiveButton>
@@ -443,7 +447,7 @@ export default function ClassSettings({ params }: { params: Promise<{ id: string
       <HiveModal open={showEditChannel} onClose={() => setShowEditChannel(false)} title="Edit Forum Channel">
         <form onSubmit={handleEditChannel} className="flex flex-col gap-5">
           <HiveInput label="Nama channel" value={editChannelData.name} onChange={e => setEditChannelData({...editChannelData, name: e.target.value})} required />
-          <HiveInput label="Ikon (emoji)" value={editChannelData.icon} onChange={e => setEditChannelData({...editChannelData, icon: e.target.value})} maxLength={4} />
+          <HiveInput label="Ikon (opsional)" value={editChannelData.icon} onChange={e => setEditChannelData({...editChannelData, icon: e.target.value})} maxLength={4} />
           <HiveInput.Textarea label="Deskripsi" value={editChannelData.description} onChange={e => setEditChannelData({...editChannelData, description: e.target.value})} rows={2} />
           <div className="flex gap-2 justify-end">
             <HiveButton variant="secondary" type="button" onClick={() => setShowEditChannel(false)}>Batal</HiveButton>

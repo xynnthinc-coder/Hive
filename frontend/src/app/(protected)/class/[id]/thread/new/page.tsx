@@ -58,17 +58,22 @@ export default function NewThread({ params }: { params: Promise<{ id: string }> 
           )}
 
           <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
-            <HiveInput.Select
-              label="Forum Channel"
-              id="thread-channel"
-              value={channelId}
-              onChange={(val) => setChannelId(Number(val))}
-              options={channels.map(ch => ({
-                value: ch.id,
-                label: ch.name,
-                icon: ch.icon || undefined
-              }))}
-            />
+            <div className="flex flex-col gap-1.5">
+              <HiveInput.Select
+                label="Forum Channel"
+                id="thread-channel"
+                value={channelId}
+                onChange={(val) => setChannelId(Number(val))}
+                options={channels.map(ch => ({
+                  value: ch.id,
+                  label: ch.name,
+                  icon: ch.icon || undefined
+                }))}
+              />
+              <p className="text-xs text-on-surface-variant px-1 mt-1">
+                Guru dapat menambahkan channel baru melalui <a href={`/class/${classId}/settings`} className="text-honey hover:underline">Pengaturan Kelas</a>.
+              </p>
+            </div>
 
             <HiveInput
               label="Judul Thread"
