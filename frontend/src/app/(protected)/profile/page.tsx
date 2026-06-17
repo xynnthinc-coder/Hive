@@ -141,14 +141,10 @@ export default function Profile() {
     setActivityLoading(true);
     try {
       const actRes = await authService.activity(page);
-      console.log('[DEBUG] activity response:', actRes);
-      console.log('[DEBUG] last_page:', actRes.last_page, '| current_page:', actRes.current_page, '| total:', actRes.total);
       setActivity(actRes.activity || []);
       setActivityPage(actRes.current_page || 1);
       setActivityLastPage(actRes.last_page || 1);
-    } catch (err) {
-      console.error('[DEBUG] activity error:', err);
-    } finally {
+    } catch {} finally {
       setActivityLoading(false);
     }
   };
