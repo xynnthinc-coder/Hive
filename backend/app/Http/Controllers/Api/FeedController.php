@@ -64,6 +64,7 @@ class FeedController extends Controller
         $threads = Thread::whereIn('forum_channel_id', $channelIds)
             ->with(['user', 'forumChannel', 'forumChannel.classRoom:id,name', 'userVote'])
             ->where('created_at', '>=', now()->subDay())
+            ->whereRaw('(vote_count + reply_count) > 0')
             ->orderByRaw('(vote_count + reply_count * 2) DESC')
             ->limit(10)
             ->get();

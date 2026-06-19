@@ -39,6 +39,7 @@ class ThreadController extends Controller
         switch ($sort) {
             case 'hot':
                 $query->where('created_at', '>=', now()->subDay())
+                      ->whereRaw('(vote_count + reply_count) > 0')
                       ->orderByRaw('(vote_count + reply_count * 2) DESC');
                 break;
             case 'top':
@@ -70,8 +71,9 @@ class ThreadController extends Controller
         $threads = Thread::whereHas('forumChannel', function ($q) use ($class) {
             $q->where('class_id', $class->id);
         })
-            ->with(['user', 'forumChannel', 'votes'])
+            ->with(['user', 'forumChannel', 'userVote'])
             ->where('created_at', '>=', now()->subDay())
+            ->whereRaw('(vote_count + reply_count) > 0')
             ->orderByRaw('(vote_count + reply_count * 2) DESC')
             ->limit(10)
             ->get();
